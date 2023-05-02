@@ -1,0 +1,34 @@
+{
+  "name": "minivuex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "build-examples": " webpack --config examples/webpack.build-all.config.js",
+    "cart": "cd examples/cart && webpack-dev-server --config ../webpack.shared.config.js",
+    "lint": "eslint --fix src test",
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^9.1.2",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^6.7.3",
+    "eslint": "^3.19.0",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-vue": "^2.1.0",
+    "html-webpack-plugin": "^5.5.1",
+    "rollup": "^3.21.3",
+    "vue": "^2.7.14",
+    "vue-loader": "^15.10.1",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "^2.7.14",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  }
+}
