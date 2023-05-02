@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type":"module",
   "scripts": {
     "build-examples": " webpack --config examples/webpack.build-all.config.js",
     "cart": "cd examples/cart && webpack-dev-server --config ../webpack.shared.config.js",
-    "lint": "eslint --fix src test",
+    "lint": "eslint --fix src examples",
     "build": "rollup -c"
   },
   "keywords": [],

@@ -3,8 +3,11 @@
     {{ msg }}
     <span v-for="n of 6" :key="n">热更新测试111</span>
     <p style="color: aqua">rwer</p>
-    <p>{{ state }}</p>
+    <p>state: {{ this.$store.state.count }}</p>
+    <p>getters: {{ this.$store.getters.evenArr }}</p>
+    <p>getters-newCount: {{ this.$store.getters.newCount }}</p>
     <button @click="add">add</button>
+    <button @click="handleCommit">commit</button>
   </div>
 </template>
 
@@ -18,13 +21,20 @@ export default {
     }
   },
   // 生命周期 - 创建完成（访问当前this实例）
-  created () {},
+  created () {
+    console.log()
+  },
   // 生命周期 - 挂载完成（访问DOM元素）
   mounted () {},
   methods: {
     add () {
-      console.log(this.msg)
-      this.msg += 2
+      this.$store.state.count++
+    },
+    handleCommit () {
+      this.$store.commit({
+        type: 'increment',
+        payload: 10
+      })
     }
   }
 }
