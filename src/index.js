@@ -1,4 +1,5 @@
 import override from './override'
+import { isObject } from './utils'
 let Vue
 class Store {
   constructor ({ state, getters, mutations, actions } = {}) {
@@ -20,26 +21,44 @@ class Store {
       })
     }
     this._mutations = mutations
-    const dispatch = this.dispatch
-    this.dispatch = (...args) => {
-      dispatch.apply(this, args)
+    this._actions = actions
+    // bind commit and dispatch to self
+    const store = this
+    const { dispatch, commit } = this
+    this.dispatch = function boundDispatch (type, payload) {
+      return dispatch.call(store, type, payload)
+    }
+    this.commit = function boundCommit (type, payload) {
+      return commit.call(store, type, payload)
     }
   }
   /**
    * 通过commit提交mutations
    */
-  commit (...args) {
-    // console.log(args);
-    // if(args.length > 1) {
-    //     this._mutations[args[0]]()
-    // }
+  commit (_type, _payload) {
+    console.log(this)
+    const { type, payload } = unifyObjectStyle(_type, _payload)
+    const entry = this._mutations[type]
+    if (entry) {
+      entry(this.state, payload)
+    } else {
+      console.warn(`miniVuex: mutations 不存在 ${type} 方法`)
+    }
   }
   /**
    * Dispatch an action.
    *
    * @param {String} type
    */
-  dispatch () {}
+  dispatch (_type, _payload) {
+    const { type, payload } = unifyObjectStyle(_type, _payload)
+    const entry = this._actions[type]
+    if (entry) {
+      entry(this, payload)
+    } else {
+      console.warn(`miniVuex: action 不存在 ${type} 方法`)
+    }
+  }
   // 获取state
   get state () {
     return this._vm.state
@@ -47,6 +66,17 @@ class Store {
   set state (val) {
     throw new Error('不能直接给state赋值')
   }
+}
+/**
+ * 转换传参类型
+ */
+function unifyObjectStyle (type, payload) {
+  if (isObject(type) && type.type) {
+    payload = type.payload
+    type = type.type
+  }
+
+  return { type, payload }
 }
 /**
  * getters 中属性只读

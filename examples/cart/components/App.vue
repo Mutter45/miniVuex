@@ -8,6 +8,7 @@
     <p>getters-newCount: {{ this.$store.getters.newCount }}</p>
     <button @click="add">add</button>
     <button @click="handleCommit">commit</button>
+    <button @click="handleDispatch">dispatch</button>
   </div>
 </template>
 
@@ -35,6 +36,10 @@ export default {
         type: 'increment',
         payload: 10
       })
+    },
+    handleDispatch () {
+      // this.$store.dispatch('addCount', 3)
+      this.$store.dispatch('addNumArr')
     }
   }
 }

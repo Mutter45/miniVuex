@@ -17,12 +17,22 @@ const store = new miniVuex.Store({
   mutations: {
     increment (state, payload) {
       state.count += payload
+    },
+    setNumArr ({ numArr }) {
+      numArr.push(parseInt(Math.random() * 10))
     }
+
   },
   actions: {
-    addCount (context) {
+    addCount (context, payload) {
       setTimeout(() => {
-        context.commit('increment')
+        context.commit('increment', payload)
+      }, 2000)
+    },
+    addNumArr ({ commit }) {
+      new Promise(resolve => {
+        commit('setNumArr')
+        resolve(22)
       })
     }
   }

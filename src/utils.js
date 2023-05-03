@@ -1,3 +1,3 @@
-export function test () {
-  return true
+export function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
 }
